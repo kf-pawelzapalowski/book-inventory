@@ -1,5 +1,8 @@
-var express = require('express')
-var app = express()
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
+
+app.use(bodyParser.json());
 
 function logger(req, res, next) {
   console.log("incoming request at " + new Date());
@@ -7,11 +10,14 @@ function logger(req, res, next) {
 };
 
 app.get('/', logger, function (req, res) {
-  throw new Error("a");
   res.send('Hello World!');
 });
 
-app.use(function(req, res, next){
+app.post('/stock', function (req, res) {
+  res.json({ isbn: req.body.isbn, count: req.body.count });
+});
+
+app.use(function (req, res, next) {
   var err = new Error("Not Found!");
   err.status = 404;
   next(err);
@@ -23,6 +29,4 @@ app.use(function (err, req, res, next) {
   res.status(err.status).send('Error: ' + err.status);
 })
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
-});
+module.exports = app;
