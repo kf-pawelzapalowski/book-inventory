@@ -1,20 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-var MongoClient = require('mongodb').MongoClient;
-
-var dbUrl = 'mongodb://localhost:27017/book-inventory';
-var collection =
-  MongoClient
-    .connect(dbUrl,
-    {
-      db: {
-        bufferMaxEntries: 0
-      }
-    }).then(function (db) {
-      return db.collection('books');
-    });
-
+var stockRepository = require('./stockRepository');
 
 app.use(bodyParser.json());
 
@@ -31,21 +18,17 @@ var errorHandler = function (err, req, res, next) {
 };
 
 app.get('/stock', function (req, res, next) {
-  collection
-    .then(function (collection) {
-      return collection.find({}).toArray();
-    })
+  stockRepository
+    .findAll()
     .then(function (books) {
       res.json(books);
     })
     .catch(next);
 });
 
-app.get('/stock/:id', logger, function (req, res) {
-  collection
-    .then(function (collection) {
-      return collection.findOne({ isbn: req.params.id });
-    })
+app.get('/stock/:id', logger, function (req, res, next) {
+  stockRepository
+    .findOne(req.params.id)
     .then(function (book) {
       res.json(book);
     })
@@ -53,11 +36,8 @@ app.get('/stock/:id', logger, function (req, res) {
 });
 
 app.post('/stock', function (req, res, next) {
-  var bookEntry = { isbn: req.body.isbn, count: req.body.count };
-  collection
-    .then(function (collection) {
-      return collection.updateOne({ isbn: bookEntry.isbn }, bookEntry, { upsert: true })
-    })
+  stockRepository
+    .stockUp(req.body)
     .then(function () {
       res.json({ isbn: req.body.isbn, count: req.body.count });
     })
