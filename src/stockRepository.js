@@ -34,7 +34,7 @@ function stockRepository() {
     function findOne(isbn) {
         return collection
             .then(function (collection) {
-                return collection.findOne({ isbn: isbn });
+                return collection.find({ isbn: isbn }).limit(1).next();
             })
     };
 
@@ -45,4 +45,4 @@ function stockRepository() {
     }
 }
 
-module.exports = stockRepository();
+module.exports = stockRepository;
