@@ -5,7 +5,8 @@ var config = {
 	maintenance: false,
 	stack: 'cedar-14',
 	config_vars: {
-		BOOKS_COLLECTION_NAME: 'buks'
+		BOOKS_COLLECTION_NAME: 'buks',
+		MONGODB_URI: process.env.MONGODB_URI
 	},
 	addons: {},
 	collaborators: ['pawel.zapalowski@gmail.com'],
