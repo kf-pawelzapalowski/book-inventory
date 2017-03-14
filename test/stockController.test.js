@@ -19,12 +19,12 @@ describe('Stock controller when called', function () {
 
         var stockController = require('../src/stockController')(stockRepository);
 
-        var next = function () { next.called = true; }
+        var next = function () { next.called = true; };
 
         stockController.getCount(req, res, next).then(function () {
             assert.ok(stockRepository.findOne.called, 'findOne() expected to be called');
             assert.ok(res.json.called, 'json() expected to be called');
-            assert.notEqual(next.called, true, 'next() should not be called')
+            assert.notEqual(next.called, true, 'next() should not be called');
 
             done(); // REMEMBER when async testing
         });
@@ -48,12 +48,12 @@ describe('Stock controller when called', function () {
 
         var stockController = require('../src/stockController')(stockRepository);
 
-        var next = function () { next.called = true; }
+        var next = function () { next.called = true; };
 
         stockController.getCount(req, res, next).then(function () {
             assert.ok(stockRepository.findOne.called, 'findOne() expected to be called');
             assert.notEqual(res.json.called, true, 'json() expected to be called');
-            assert.ok(next.called, 'next() should not be called')
+            assert.ok(next.called, 'next() should not be called');
 
             done(); // REMEMBER when async testing
         });
@@ -77,12 +77,12 @@ describe('Stock controller when called', function () {
 
         var stockController = require('../src/stockController')(stockRepository);
 
-        var next = function () { next.called = true; }
+        var next = function () { next.called = true; };
 
         stockController.getCount(req, res, next).then(function () {
             assert.ok(stockRepository.findOne.called, 'findOne() expected to be called');
             assert.notEqual(res.json.called, true, 'json() expected to be called');
-            assert.ok(next.called, 'next() should not be called')
+            assert.ok(next.called, 'next() should not be called');
 
             done(); // REMEMBER when async testing
         });

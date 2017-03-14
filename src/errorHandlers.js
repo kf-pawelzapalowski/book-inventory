@@ -19,4 +19,4 @@ module.exports = function (app) {
 
     // for other use global error handler
     app.use(errorHandler);
-}
+};

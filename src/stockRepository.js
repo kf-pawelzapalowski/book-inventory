@@ -20,29 +20,29 @@ function stockRepository() {
 
         return collection
             .then(function (collection) {
-                return collection.updateOne({ isbn: bookEntry.isbn }, bookEntry, { upsert: true })
+                return collection.updateOne({ isbn: bookEntry.isbn }, bookEntry, { upsert: true });
             });
-    };
+    }
 
     function findAll() {
         return collection
             .then(function (collection) {
                 return collection.find({}).toArray();
             });
-    };
+    }
 
     function findOne(isbn) {
         return collection
             .then(function (collection) {
                 return collection.find({ isbn: isbn }).limit(1).next();
-            })
-    };
+            });
+    }
 
     return {
         stockUp: stockUp,
         findAll: findAll,
         findOne: findOne
-    }
+    };
 }
 
 module.exports = stockRepository;
