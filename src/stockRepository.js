@@ -1,7 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 
 function stockRepository() {
-    var dbUrl = 'mongodb://localhost:27017/book-inventory';
+    var dbUrl = process.env.MONGODB_URI || 'mongodb://localhost:27017/book-inventory';
     var collection = MongoClient
         .connect(dbUrl, { bufferMaxEntries: 0 })
         .then(function (db) {
