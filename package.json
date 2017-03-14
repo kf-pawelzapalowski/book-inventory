@@ -17,6 +17,7 @@
     "mongodb": "^2.2.24"
   },
   "devDependencies": {
+    "heroin-js": "^1.16.2",
     "jshint": "^2.9.4",
     "mocha": "3.2.0",
     "supertest": "^3.0.0"

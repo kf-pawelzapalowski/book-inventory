@@ -2,10 +2,12 @@ var MongoClient = require('mongodb').MongoClient;
 
 function stockRepository() {
     var dbUrl = process.env.MONGODB_URI || 'mongodb://localhost:27017/book-inventory';
+    var collectionName = process.env.BOOKS_COLLECTION_NAME || 'books';
+
     var collection = MongoClient
         .connect(dbUrl, { bufferMaxEntries: 0 })
         .then(function (db) {
-            return db.collection('buks');
+            return db.collection(collectionName);
         })
         .catch(function (err) {
             console.error(err);
