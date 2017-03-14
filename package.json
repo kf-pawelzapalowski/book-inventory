@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src\\server.js",
+    "start": "node src/server.js",
     "test": "mocha",
     "test:xunit": "npm run test -- --reporter xunit",
-    "lint": "jshint --exclude=node_modules//** ."
+    "lint": "jshint --exclude=node_modules/** ."
   },
   "author": "",
   "license": "ISC",
