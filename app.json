@@ -1,0 +1,20 @@
+{
+  "name": "book-inventory",
+  "scripts": {
+  },
+  "env": {
+    "BOOKS_COLLECTION_NAME": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
