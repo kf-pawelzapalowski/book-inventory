@@ -5,7 +5,7 @@ function stockRepository() {
     var collection = MongoClient
         .connect(dbUrl, { bufferMaxEntries: 0 })
         .then(function (db) {
-            return db.collection('books');
+            return db.collection('buks');
         })
         .catch(function (err) {
             console.error(err);
