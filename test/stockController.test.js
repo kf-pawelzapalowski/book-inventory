@@ -1,0 +1,90 @@
+var assert = require('assert');
+
+describe('Stock controller when called', function () {
+    it('getCount(), stock repository findOne is called and returns result', function (done) {
+        var req = { params: { isbn: '123456' } };
+        var res = {
+            json: function (result) {
+                res.json.called = true;
+            }
+        };
+
+        var stockRepository = {
+            findOne: function (isbn) {
+                assert.equal(isbn, req.params.isbn);
+                stockRepository.findOne.called = true;
+                return Promise.resolve({ isbn: isbn, count: 10 });
+            }
+        };
+
+        var stockController = require('../src/stockController')(stockRepository);
+
+        var next = function () { next.called = true; }
+
+        stockController.getCount(req, res, next).then(function () {
+            assert.ok(stockRepository.findOne.called, 'findOne() expected to be called');
+            assert.ok(res.json.called, 'json() expected to be called');
+            assert.notEqual(next.called, true, 'next() should not be called')
+
+            done(); // REMEMBER when async testing
+        });
+    });
+
+    it('getCount(), stock repository findOne is called and returns null', function (done) {
+        var req = { params: { isbn: '123456' } };
+        var res = {
+            json: function (result) {
+                res.json.called = true;
+            }
+        };
+
+        var stockRepository = {
+            findOne: function (isbn) {
+                assert.equal(isbn, req.params.isbn);
+                stockRepository.findOne.called = true;
+                return Promise.resolve(null);
+            }
+        };
+
+        var stockController = require('../src/stockController')(stockRepository);
+
+        var next = function () { next.called = true; }
+
+        stockController.getCount(req, res, next).then(function () {
+            assert.ok(stockRepository.findOne.called, 'findOne() expected to be called');
+            assert.notEqual(res.json.called, true, 'json() expected to be called');
+            assert.ok(next.called, 'next() should not be called')
+
+            done(); // REMEMBER when async testing
+        });
+    });
+
+    it('getCount(), stock repository findOne is called but returns an error', function (done) {
+        var req = { params: { isbn: '123456' } };
+        var res = {
+            json: function (result) {
+                res.json.called = true;
+            }
+        };
+
+        var stockRepository = {
+            findOne: function (isbn) {
+                assert.equal(isbn, req.params.isbn);
+                stockRepository.findOne.called = true;
+                return Promise.reject();
+            }
+        };
+
+        var stockController = require('../src/stockController')(stockRepository);
+
+        var next = function () { next.called = true; }
+
+        stockController.getCount(req, res, next).then(function () {
+            assert.ok(stockRepository.findOne.called, 'findOne() expected to be called');
+            assert.notEqual(res.json.called, true, 'json() expected to be called');
+            assert.ok(next.called, 'next() should not be called')
+
+            done(); // REMEMBER when async testing
+        });
+    });
+});

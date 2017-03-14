@@ -1,6 +1,6 @@
 module.exports = function (stockRepository) {
     function getAll(req, res, next) {
-        stockRepository
+        return stockRepository
             .findAll()
             .then(function (books) {
                 res.json(books);
@@ -9,7 +9,7 @@ module.exports = function (stockRepository) {
     };
 
     function getCount(req, res, next) {
-        stockRepository
+        return stockRepository
             .findOne(req.params.isbn)
             .then(function (book) {
                 if (book == null) {
@@ -22,7 +22,7 @@ module.exports = function (stockRepository) {
     };
 
     function stockUp(req, res, next) {
-        stockRepository
+        return stockRepository
             .stockUp(req.body)
             .then(function () {
                 res.json({ isbn: req.body.isbn, count: req.body.count });
