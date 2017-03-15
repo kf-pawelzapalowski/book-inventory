@@ -15,7 +15,14 @@ module.exports = function (stockRepository) {
                 if (book === null) {
                     next();  // we have generic not-found handler for all requests, so here we tell that we want to use it
                 } else {
-                    res.json({ count: book.count });
+                    res.format({
+                        'text/html': function () {
+                            res.send('<div>Book: ' + book.count + '</div>')
+                        },
+                        default: function () {
+                            res.json({ count: book.count });
+                        }
+                    });
                 }
             })
             .catch(next);
