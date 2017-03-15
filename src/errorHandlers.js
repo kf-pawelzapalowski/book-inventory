@@ -11,7 +11,6 @@ module.exports = function (app) {
     });
 
     var errorHandler = function (err, req, res, next) {
-        console.error(err);
         err.status = err.status || 500;
         res.status(err.status).send('Error: ' + err.status);
         next();

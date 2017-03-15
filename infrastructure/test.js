@@ -48,7 +48,7 @@ var config = {
 		size: 'Free'
 	}
 	],
-	log_drains: [],
+	log_drains: ['syslog://data.logentries.com:12770'],
 	buildpacks: ['urn:buildpack:heroku/nodejs']
 };
 

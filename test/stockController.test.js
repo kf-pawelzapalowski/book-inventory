@@ -4,8 +4,8 @@ describe('Stock controller when called', function () {
     it('getCount(), stock repository findOne is called and returns result', function (done) {
         var req = { params: { isbn: '123456' } };
         var res = {
-            json: function (result) {
-                res.json.called = true;
+            format: function (result) {
+                res.format.called = true;
             }
         };
 
@@ -23,7 +23,7 @@ describe('Stock controller when called', function () {
 
         stockController.getCount(req, res, next).then(function () {
             assert.ok(stockRepository.findOne.called, 'findOne() expected to be called');
-            assert.ok(res.json.called, 'json() expected to be called');
+            assert.ok(res.format.called, 'format() expected to be called');
             assert.notEqual(next.called, true, 'next() should not be called');
 
             done(); // REMEMBER when async testing
@@ -33,8 +33,8 @@ describe('Stock controller when called', function () {
     it('getCount(), stock repository findOne is called and returns null', function (done) {
         var req = { params: { isbn: '123456' } };
         var res = {
-            json: function (result) {
-                res.json.called = true;
+            format: function (result) {
+                res.format.called = true;
             }
         };
 
@@ -52,7 +52,7 @@ describe('Stock controller when called', function () {
 
         stockController.getCount(req, res, next).then(function () {
             assert.ok(stockRepository.findOne.called, 'findOne() expected to be called');
-            assert.notEqual(res.json.called, true, 'json() expected to be called');
+            assert.notEqual(res.format.called, true, 'format() expected to be called');
             assert.ok(next.called, 'next() should not be called');
 
             done(); // REMEMBER when async testing
@@ -62,8 +62,8 @@ describe('Stock controller when called', function () {
     it('getCount(), stock repository findOne is called but returns an error', function (done) {
         var req = { params: { isbn: '123456' } };
         var res = {
-            json: function (result) {
-                res.json.called = true;
+            format: function (result) {
+                res.format.called = true;
             }
         };
 
@@ -81,7 +81,7 @@ describe('Stock controller when called', function () {
 
         stockController.getCount(req, res, next).then(function () {
             assert.ok(stockRepository.findOne.called, 'findOne() expected to be called');
-            assert.notEqual(res.json.called, true, 'json() expected to be called');
+            assert.notEqual(res.format.called, true, 'format() expected to be called');
             assert.ok(next.called, 'next() should not be called');
 
             done(); // REMEMBER when async testing
